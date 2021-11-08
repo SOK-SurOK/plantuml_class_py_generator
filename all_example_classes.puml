@@ -1,0 +1,46 @@
+@startuml
+
+hide empty members
+
+
+' my comment
+
+
+class Nasledovanie {
+}
+
+
+note top of $x.z.Zavisimost.__np__ : Этот класс используется в методе другого класса
+class $x.z.Zavisimost.__np__ {
+}
+
+class ZZ.ZavisiMost2 {
+}
+
+note top of Agregacia.__aa__ : Этот класс необходим другому (атрибут),\nно может существовать и отдельно
+class Agregacia.__aa__ {
+}
+
+note top of $Kompozicia : Этот класс необходим другому (атрибут)\nи не может существовать отдельно
+class $Kompozicia {
+}
+
+
+class IdealParent {
++ attribute1: aa
+- __attribute2: Kompozicia
+- __attribute3: float = 6
+' the comment
++ method1(self, p1: np, p2: float = 0): float
+- __method2(self, x: List[int], y: int = 7): bool
++ method3(): void
+}
+
+$x.z.Zavisimost.__np__ <.. IdealParent
+ZZ.ZavisiMost2 <.. IdealParent
+Agregacia.__aa__ --o IdealParent
+$Kompozicia --* IdealParent
+
+IdealParent <|-- Nasledovanie
+
+@enduml
