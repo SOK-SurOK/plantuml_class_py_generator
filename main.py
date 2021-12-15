@@ -324,12 +324,12 @@ def get_file_parser(file_name: str) -> Any:
     the_class_name = alphanums + "_.$"
     start_file = (Literal("@startuml"))
     hide_setting = (Literal("hide") + Literal("empty") + Literal("members")).suppress()
-    base_class = (LineStart().suppress() + Literal("class").suppress() + Word(the_class_name) + Literal(
+    base_class = (Literal("class").suppress() + Word(the_class_name) + Literal(
         "{").suppress() + SkipTo("}") + Literal("}").suppress()).setResultsName("classes", listAllMatches=True)
     comment = (Literal("'") + restOfLine()).suppress()
-    relationship = (LineStart().suppress() + Word(the_class_name) + Word("-|>*.<o") + Word(
+    relationship = (Word(the_class_name) + Word("-|>*.<o") + Word(
         the_class_name) + restOfLine().suppress()).setResultsName("relationships", listAllMatches=True)
-    note = (LineStart().suppress() + Literal("note") + restOfLine).suppress()
+    note = (Literal("note") + restOfLine).suppress()
     end_file = (SkipTo("@enduml").suppress() + Literal("@enduml"))
 
     parse_file = start_file + hide_setting + OneOrMore(base_class | comment | relationship | note) + end_file
